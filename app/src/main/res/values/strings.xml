@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">TaskManager</string>
+    <string name="novi_zadatak">Novi Zadatak</string>
+    <string name="statistika">Statistika</string>
+    <string name="ime_zadatka">Ime Zadatka</string>
+    <string name="isticanje_zadatka">Vremenski period isticanja zadatka</string>
+    <string name="opis_zadatka">Opis Zadatka</string>
+    <string name="podsetnik">Podseti me 15 minuta pre isteka</string>
+    <string name="dodaj">Dodaj</string>
+    <string name="otkazi">Otkazi</string>
+    <string name="izaberi_datum">Izaberi Datum</string>
+    <string name="izaberi_vreme">Izaberi Vreme</string>
+    <string name="izabrani_datum">Izabrani Datum:</string>
+    <string name="izabrano_vreme">Izabrano Vreme:</string>
+    <string name="prioritet_visok">Visok</string>
+    <string name="prioritet_srednji">Srednji</string>
+    <string name="prioritet_nizak">Nizak</string>
+    <string name="izaberi_prioritet">Izaberi Prioritet:</string>
+    <string name="datum">Datum</string>
+    <string name="sacuvaj">Sacuvaj</string>
+    <string name="obrisi">Obrisi</string>
+    <string name ="ponedeljak">Ponedeljak</string>
+    <string name ="utorak">Utorak</string>
+    <string name ="sreda">Sreda</string>
+    <string name ="cetvrtak">Cetvrtak</string>
+    <string name ="petak">Petak</string>
+    <string name ="subota">Subota</string>
+    <string name ="nedelja">Nedelja</string>
+    <string name ="danas">Danas</string>
+    <string name ="sutra">Sutra</string>
+    <string name ="prekosutra">Prekosutra</string>
+    <string name="unesite_ime">Unesite ime</string>
+    <string name="unesite_datum">Unesite datum</string>
+    <string name="unesite_vreme">Unesite vreme</string>
+    <string name="unesite_prioritet">Unesite prioritet</string>
+
+</resources>
