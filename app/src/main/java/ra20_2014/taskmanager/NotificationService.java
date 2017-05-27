@@ -35,7 +35,7 @@ public class NotificationService extends Service {
                    if (tasks != null){
                        for (Task t : tasks){
                            if (t.isReminder()){
-                                msec_task = t.getTime_in_msec();
+                                msec_task = t.getTimeInMsec();
                                 if (msec_task - msec_now < 1000*60*1){
                                     notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                                     builder = new NotificationCompat.Builder(NotificationService.this)
@@ -61,7 +61,7 @@ public class NotificationService extends Service {
                        }
                    }
                } finally {
-                   mHandler.postDelayed(this,10000);
+                   mHandler.postDelayed(this,60000);
                }
             }
         };

@@ -116,7 +116,7 @@ public class TaskAdapter extends BaseAdapter {
                 }
             }
         });
-        holder.date.setText(task.date);
+        holder.date.setText(task.getData());
         holder.reminder.setChecked(task.reminder);
 
         return  view;

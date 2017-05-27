@@ -16,7 +16,12 @@ public class TaskDatabase extends SQLiteOpenHelper {
     private static final String TABLE_NAME = "tabela";
 
     private static final String COLUMN_TASK_NAME = "ime_zadatka";
-    private static final String COLUMN_TASK_DATE = "datum_zadatka";
+    private static final String COLUMN_TASK_DATE = "datum_zadatka_ispis";
+    private static final String COLUMN_TASK_DATE_YEAR = "datum_zadatka_godina";
+    private static final String COLUMN_TASK_DATE_MONTH = "datum_zadatka_mesec";
+    private static final String COLUMN_TASK_DATE_DAY = "datum_zadatka_dan";
+    private static final String COLUMN_TASK_DATE_HOUR = "datum_zadatka_sat";
+    private static final String COLUMN_TASK_DATE_MINUTE = "datum_zadatka_minut";
     private static final String COLUMN_TASK_PRIORITY = "prioritet_zadatka";
     private static final String COLUMN_TASK_MSEC = "vreme_setovanja_zadatka";
     private static final String COLUMN_TASK_DESQ = "opis_zadatka";
@@ -33,6 +38,11 @@ public class TaskDatabase extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + TABLE_NAME + " (" +
                 COLUMN_TASK_NAME + " TEXT, " +
                 COLUMN_TASK_DATE + " TEXT, " +
+                COLUMN_TASK_DATE_YEAR + " INTEGER, " +
+                COLUMN_TASK_DATE_MONTH + " INTEGER, " +
+                COLUMN_TASK_DATE_DAY + " INTEGER, " +
+                COLUMN_TASK_DATE_HOUR + " INTEGER, " +
+                COLUMN_TASK_DATE_MINUTE + " INTEGER, " +
                 COLUMN_TASK_PRIORITY + " INTEGER, " +
                 COLUMN_TASK_DESQ + " TEXT, " +
                 COLUMN_TASK_MSEC + " LONG, " +
@@ -49,7 +59,13 @@ public class TaskDatabase extends SQLiteOpenHelper {
     public void addTask(Task t){
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_TASK_NAME, t.getName());
-        cv.put(COLUMN_TASK_DATE, t.getDate());
+        cv.put(COLUMN_TASK_DATE, t.getData());
+        cv.put(COLUMN_TASK_DATE_YEAR, t.getGodina());
+        cv.put(COLUMN_TASK_DATE_MONTH, t.getMesec());
+        cv.put(COLUMN_TASK_DATE_DAY, t.getDan());
+        cv.put(COLUMN_TASK_DATE_HOUR, t.getSat());
+        cv.put(COLUMN_TASK_DATE_MINUTE, t.getMinut());
+
         cv.put(COLUMN_TASK_DESQ, t.getDesq());
         cv.put(COLUMN_TASK_PRIORITY,t.getPriority());
 
@@ -65,7 +81,7 @@ public class TaskDatabase extends SQLiteOpenHelper {
             cv.put(COLUMN_TASK_CHECKED, 0);
 
 
-        cv.put(COLUMN_TASK_MSEC, t.getTime_in_msec());
+
 
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_NAME,null,cv);
@@ -74,7 +90,12 @@ public class TaskDatabase extends SQLiteOpenHelper {
     public void updateTask(Task t, int id_taska){
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_TASK_NAME, t.getName());
-        cv.put(COLUMN_TASK_DATE, t.getDate());
+        cv.put(COLUMN_TASK_DATE, t.getData());
+        cv.put(COLUMN_TASK_DATE_YEAR, t.getGodina());
+        cv.put(COLUMN_TASK_DATE_MONTH, t.getMesec());
+        cv.put(COLUMN_TASK_DATE_DAY, t.getDan());
+        cv.put(COLUMN_TASK_DATE_HOUR, t.getSat());
+        cv.put(COLUMN_TASK_DATE_MINUTE, t.getMinut());
         cv.put(COLUMN_TASK_DESQ, t.getDesq());
         cv.put(COLUMN_TASK_PRIORITY,t.getPriority());
         if (t.isReminder()) {
@@ -88,7 +109,7 @@ public class TaskDatabase extends SQLiteOpenHelper {
             cv.put(COLUMN_TASK_CHECKED, 0);
 
 
-        cv.put(COLUMN_TASK_MSEC, t.getTime_in_msec());
+
 
         SQLiteDatabase db = getWritableDatabase();
         db.update(TABLE_NAME,cv,COLUMN_TASK_ID + "=?", new String[] {String.valueOf(id_taska+1)});
@@ -130,7 +151,13 @@ public class TaskDatabase extends SQLiteOpenHelper {
 
     private Task createTask(Cursor cursor){
         String name = cursor.getString(cursor.getColumnIndex(COLUMN_TASK_NAME));
-        String date = cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DATE));
+        int godina = cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_DATE_YEAR));
+        int mesec = cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_DATE_MONTH));
+        int dan = cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_DATE_DAY));
+        int sat = cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_DATE_HOUR));
+        int minut = cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_DATE_MINUTE));
+
+        String data = cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DATE));
         String desq = cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DESQ));
         int priority = cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_PRIORITY));
         long msec = cursor.getLong(cursor.getColumnIndex(COLUMN_TASK_MSEC));
@@ -148,7 +175,7 @@ public class TaskDatabase extends SQLiteOpenHelper {
             checked=true;
         else
             checked = false;
-        return new Task(name,date,priority,reminder,msec,desq,checked);
+        return new Task(name,priority,reminder,msec,desq,checked,godina,mesec,dan,sat,minut,data);
 
     }
 }
