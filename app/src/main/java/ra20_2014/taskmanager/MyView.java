@@ -82,7 +82,7 @@ public class MyView extends View {
 
             @Override
             public void run() {
-                while(curr_h< h_percent || curr_m< m_percent || curr_l< l_percent){
+                while(curr_h<=h_percent || curr_m<= m_percent || curr_l<= l_percent){
                     postInvalidate();
                     try {
                         Thread.sleep(50);

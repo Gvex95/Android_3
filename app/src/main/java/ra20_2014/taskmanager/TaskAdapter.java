@@ -30,12 +30,25 @@ public class TaskAdapter extends BaseAdapter {
         mTasks.add(t);
         notifyDataSetChanged();
     }
-
+    public ArrayList<Task> getTasks (){
+        return mTasks;
+    }
 
     @Override
     public int getCount() {
         return mTasks.size();
     }
+
+    public void update(Task[] tasks){
+        mTasks.clear();
+        if(tasks != null){
+            for(Task t: tasks){
+                mTasks.add(t);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public Object getItem(int position) {

@@ -1,0 +1,1 @@
+2 buga, time se ne prenese kad se menja zad, i ako se promeni zad stize uvek notifikacija, vrvatno zbog buga 1

@@ -7,24 +7,51 @@ import java.io.Serializable;
  */
 
 public class Task implements Serializable {
-    public String name,date;
+    public String name,date,desq;
     public int priority;
-    public boolean check,reminder;
+    public boolean reminder,check;
+    private long time_in_msec;
 
-    public Task(String name, String date, int priority, boolean check, boolean reminder) {
+    public Task(String name, String date, int priority, boolean reminder, long time_in_msec,String desq) {
         this.name = name;
         this.date = date;
         this.priority = priority;
-        this.check = check;
         this.reminder = reminder;
+        this.time_in_msec = time_in_msec;
+        this.desq = desq;
     }
     public Task(){
         this.name="";
         this.priority=0;
         this.date="";
-        this.check=false;
         this.reminder=false;
+        this.time_in_msec = 0;
+        this.desq = "";
 
+    }
+
+    public String getDesq() {
+        return desq;
+    }
+
+    public void setDesq(String desq) {
+        this.desq = desq;
+    }
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
+
+    public long getTime_in_msec() {
+        return time_in_msec;
+    }
+
+    public void setTime_in_msec(long time_in_msec) {
+        this.time_in_msec = time_in_msec;
     }
 
     public String getName() {
@@ -51,13 +78,7 @@ public class Task implements Serializable {
         this.priority = priority;
     }
 
-    public boolean isCheck() {
-        return check;
-    }
 
-    public void setCheck(boolean check) {
-        this.check = check;
-    }
 
     public boolean isReminder() {
         return reminder;
