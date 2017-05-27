@@ -475,18 +475,17 @@ public class Dodavanje extends Activity {
         choose_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             if(id_zadatka == -1) {
-                 currentDay = myCalendar.get(Calendar.DAY_OF_MONTH);
-                 currentMonth = myCalendar.get(Calendar.MONTH);
-                 currentYear = myCalendar.get(Calendar.YEAR);
-             }
-
-             /*
-             Task t = db.readTask(id_zadatka);
+            if (id_zadatka!=-1){
+                Task t = db.readTask(id_zadatka);
                 currentDay = t.getDan();
                 currentMonth = t.getMesec();
                 currentYear = t.getGodina();
-            */
+            }else{
+                currentDay = myCalendar.get(Calendar.DAY_OF_MONTH);
+                currentMonth = myCalendar.get(Calendar.MONTH);
+                currentYear = myCalendar.get(Calendar.YEAR);
+
+            }
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(Dodavanje.this, new DatePickerDialog.OnDateSetListener()
                 {
@@ -514,9 +513,16 @@ public class Dodavanje extends Activity {
         choose_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(id_zadatka!=-1){
+                    Task t = db.readTask(id_zadatka);
+                    currentHour = t.getSat();
+                    currentMin = t.getMinut();
 
-                currentHour = myCalendar.get(Calendar.HOUR_OF_DAY);
-                currentMin = myCalendar.get(Calendar.MINUTE);
+                }else{
+                    currentHour = myCalendar.get(Calendar.HOUR_OF_DAY);
+                    currentMin = myCalendar.get(Calendar.MINUTE);
+                }
+
                 TimePickerDialog timePickerDialog = new TimePickerDialog(Dodavanje.this,new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
