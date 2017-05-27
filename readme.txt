@@ -2,3 +2,4 @@
 namestiti da je pocetno u pickeru kao ono sto se modifikuje
 testirati sve slucajeve
 popraviti da se checker ne vraca na odcekiran nakon sto se ode u statistiku
+dodati back dugme u statistiku
