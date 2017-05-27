@@ -70,19 +70,19 @@ public class TaskAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = convertView;
-        if (view == null){
-            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(
-                    Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.one_row,null);
-            ViewHolder holder = new ViewHolder ();
 
-            holder.name = (TextView) view.findViewById(R.id.ime_zadatka);
-            holder.priority = view.findViewById(R.id.prioritet);
-            holder.date = (TextView) view.findViewById(R.id.datum);
-            holder.check = (CheckBox) view.findViewById(R.id.zavrsen_zadatak);
-            holder.reminder = (RadioButton) view.findViewById(R.id.podsetnik);
+            View view = convertView;
+            if (view == null){
+                LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(
+                        Context.LAYOUT_INFLATER_SERVICE);
+                view = inflater.inflate(R.layout.one_row,null);
+                ViewHolder holder = new ViewHolder ();
 
+                holder.name = (TextView) view.findViewById(R.id.ime_zadatka);
+                holder.priority = view.findViewById(R.id.prioritet);
+                holder.date = (TextView) view.findViewById(R.id.datum);
+                holder.check = (CheckBox) view.findViewById(R.id.zavrsen_zadatak);
+                holder.reminder = (RadioButton) view.findViewById(R.id.podsetnik);
             view.setTag(holder);
 
         }

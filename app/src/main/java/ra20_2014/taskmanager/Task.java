@@ -12,13 +12,14 @@ public class Task implements Serializable {
     public boolean reminder,check;
     private long time_in_msec;
 
-    public Task(String name, String date, int priority, boolean reminder, long time_in_msec,String desq) {
+    public Task(String name, String date, int priority, boolean reminder, long time_in_msec,String desq,boolean check) {
         this.name = name;
         this.date = date;
         this.priority = priority;
         this.reminder = reminder;
         this.time_in_msec = time_in_msec;
         this.desq = desq;
+        this.check = check;
     }
     public Task(){
         this.name="";
@@ -27,6 +28,7 @@ public class Task implements Serializable {
         this.reminder=false;
         this.time_in_msec = 0;
         this.desq = "";
+        this.check = false;
 
     }
 

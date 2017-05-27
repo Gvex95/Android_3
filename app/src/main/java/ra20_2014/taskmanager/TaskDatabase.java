@@ -21,6 +21,7 @@ public class TaskDatabase extends SQLiteOpenHelper {
     private static final String COLUMN_TASK_MSEC = "vreme_setovanja_zadatka";
     private static final String COLUMN_TASK_DESQ = "opis_zadatka";
     private static final String COLUMN_TASK_REMINDER = "podsetnik_zadatka";
+    private static final String COLUMN_TASK_CHECKED = "zavrsen_zadatak";
     private static final String COLUMN_TASK_ID = "id_zadatka";
     public TaskDatabase(Context context) {
         super(context, DATABASE_NAME, null,DATABASE_VERSION);
@@ -36,6 +37,7 @@ public class TaskDatabase extends SQLiteOpenHelper {
                 COLUMN_TASK_DESQ + " TEXT, " +
                 COLUMN_TASK_MSEC + " LONG, " +
                 COLUMN_TASK_REMINDER + " INTEGER, " +
+                COLUMN_TASK_CHECKED + " INTEGER, " +
                 COLUMN_TASK_ID + " INTEGER PRIMARY KEY );" );
     }
 
@@ -50,10 +52,19 @@ public class TaskDatabase extends SQLiteOpenHelper {
         cv.put(COLUMN_TASK_DATE, t.getDate());
         cv.put(COLUMN_TASK_DESQ, t.getDesq());
         cv.put(COLUMN_TASK_PRIORITY,t.getPriority());
+
         if (t.isReminder()) {
             cv.put(COLUMN_TASK_REMINDER, 1);
         }else
             cv.put(COLUMN_TASK_REMINDER, 0);
+
+
+        if (t.isCheck()) {
+            cv.put(COLUMN_TASK_CHECKED, 1);
+        }else
+            cv.put(COLUMN_TASK_CHECKED, 0);
+
+
         cv.put(COLUMN_TASK_MSEC, t.getTime_in_msec());
 
         SQLiteDatabase db = getWritableDatabase();
@@ -70,6 +81,13 @@ public class TaskDatabase extends SQLiteOpenHelper {
             cv.put(COLUMN_TASK_REMINDER, 1);
         }else
             cv.put(COLUMN_TASK_REMINDER, 0);
+
+        if (t.isCheck()) {
+            cv.put(COLUMN_TASK_CHECKED, 1);
+        }else
+            cv.put(COLUMN_TASK_CHECKED, 0);
+
+
         cv.put(COLUMN_TASK_MSEC, t.getTime_in_msec());
 
         SQLiteDatabase db = getWritableDatabase();
@@ -123,7 +141,14 @@ public class TaskDatabase extends SQLiteOpenHelper {
         else
             reminder = false;
 
-        return new Task(name,date,priority,reminder,msec,desq);
+
+        int checked_i = cursor.getInt(cursor.getColumnIndex(COLUMN_TASK_CHECKED));
+        boolean checked;
+        if (checked_i == 1)
+            checked=true;
+        else
+            checked = false;
+        return new Task(name,date,priority,reminder,msec,desq,checked);
 
     }
 }

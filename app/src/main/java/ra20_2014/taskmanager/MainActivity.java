@@ -33,6 +33,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //find all buttons
+
+
         Log.d(TAG,"1");
         new_task=(Button)findViewById(R.id.button1);
         statistic=(Button)findViewById(R.id.button2);
@@ -44,6 +46,12 @@ public class MainActivity extends Activity {
         list = (ListView) findViewById(R.id.lista);
         adapter = new TaskAdapter(this);
         Log.d(TAG,"3");
+
+        //bindovanje na servis
+        Intent i = new Intent(this,NotificationService.class);
+        bindService(i,mConnection,BIND_AUTO_CREATE);
+
+
 
         new_task.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,28 +95,6 @@ public class MainActivity extends Activity {
 
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK) {
-
-            }
-            if(resultCode == Activity.RESULT_OK) {
-
-            }
-        }else if(requestCode == 2) {
-
-            if (resultCode == Activity.RESULT_OK) {
-                onResume();
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-
-            }
-        }
-
-    }
-
 
 
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -127,15 +113,17 @@ public class MainActivity extends Activity {
     };
 
     //prebaciti ovo posle na onCreate,trebalo bi da radi tamo, ako sad imam bazu
+    /*
     @Override
     protected void onStart() {
         super.onStart();
         //bind to service
         Intent i = new Intent(this,NotificationService.class);
         bindService(i,mConnection,BIND_AUTO_CREATE);
-        //Toast.makeText(getApplication().getBaseContext(), "Service is bounded", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplication().getBaseContext(), "Service is bounded", Toast.LENGTH_SHORT).show();
 
     }
+
 
     @Override
     protected void onStop() {
@@ -145,4 +133,5 @@ public class MainActivity extends Activity {
         //Toast.makeText(getApplication().getBaseContext(), "Service is unbounded", Toast.LENGTH_SHORT).show();
         mBound = false;
     }
+    */
 }
