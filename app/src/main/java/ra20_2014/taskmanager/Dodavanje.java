@@ -267,7 +267,7 @@ public class Dodavanje extends Activity {
                             date = entered_date.getText().toString();
                         }
 
-                        if (taskDateInMilliSec - currentDateInMilliSec <= 1000 * 60 * 1 && reminder.isChecked()) {
+                        if (taskDateInMilliSec - currentDateInMilliSec <= 1000 * 60 * 5 && reminder.isChecked()) {
                             reminder.setChecked(false);
                             Toast.makeText(getApplication().getBaseContext(), "Ne moze reminder,istice za manje od 15 minuta, promenite vreme", Toast.LENGTH_LONG).show();
                         } else {
@@ -526,7 +526,7 @@ public class Dodavanje extends Activity {
 
 
 
-                        if (taskDateInMilliSec - currentDateInMilliSec <= 1000 * 60 * 1 && reminder.isChecked()) {
+                        if (taskDateInMilliSec - currentDateInMilliSec <= 1000 * 60 * 5 && reminder.isChecked()) {
                             reminder.setChecked(false);
                             //Toast.makeText(getApplication().getBaseContext(), "Ne moze reminder,istice za manje od 15 minuta, promenite vreme", Toast.LENGTH_LONG).show();
                             //Toast.makeText(getApplication().getBaseContext(), String.valueOf(myYear) + "/" + String.valueOf(myMonth) + "/" + String.valueOf(myDay) + String.valueOf(t.getSat()) + ":" + String.valueOf(t.getMinut()) , Toast.LENGTH_LONG).show();

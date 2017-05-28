@@ -38,7 +38,7 @@ public class NotificationService extends Service {
                        for (Task t : tasks){
                            if (t.isReminder()){
                                 msec_task = t.getTimeInMsec();
-                                if (msec_task - msec_now == 1000*60*1){
+                                if (msec_task - msec_now == 1000*60*5){
                                     notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
                                     Uri sound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
@@ -70,7 +70,7 @@ public class NotificationService extends Service {
                        }
                    }
                } finally {
-                   mHandler.postDelayed(this,10000);
+                   mHandler.postDelayed(this,60000);
                }
             }
         };
