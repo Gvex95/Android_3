@@ -1,6 +1,7 @@
 package ra20_2014.taskmanager;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 public class TaskAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<Task> mTasks;
+
 
     public TaskAdapter(Context context){
         mContext=context;

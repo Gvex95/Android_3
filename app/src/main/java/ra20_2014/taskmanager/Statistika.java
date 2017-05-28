@@ -2,9 +2,12 @@ package ra20_2014.taskmanager;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class Statistika extends Activity {
@@ -18,11 +21,15 @@ public class Statistika extends Activity {
     private float h_counter=0;
     private float m_counter=0;
     private float l_counter=0;
+    private Button back;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MyView myView = new MyView(this);
-        setContentView(myView);
+        //MyView myView = new MyView(this);
+        //setContentView(myView);
+        setContentView(R.layout.activity_statistika);
         Task[] tasks = db.readTasks();
         int i;
         for (i=0;i<tasks.length;i++){
@@ -33,7 +40,7 @@ public class Statistika extends Activity {
             }else
                 l_counter++;
         }
-
+        back = (Button)findViewById(R.id.back_button);
 
         float broj_taskova = tasks.length;
         h_percent = (h_counter/broj_taskova)*100;
@@ -43,8 +50,17 @@ public class Statistika extends Activity {
 
 
         //setContentView(R.layout.activity_statistika);
-        //MyView myView = (MyView) findViewById(R.id.view);
+        MyView myView = (MyView) findViewById(R.id.view);
 
-        myView.neka_funkcija(h_percent,m_percent,l_percent);
+        myView.iscrtaj(h_percent,m_percent,l_percent);
+
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Statistika.this,MainActivity.class);
+                startActivity(i);
+            }
+        });
     }
 }

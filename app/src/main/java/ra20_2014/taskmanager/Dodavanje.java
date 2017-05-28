@@ -31,8 +31,8 @@ public class Dodavanje extends Activity {
     private String taskName,left,right,date;
     private boolean remind;
     private Intent main_intent;
-    private boolean update_date_button = false;
-    private boolean update_time_button = false;
+    private boolean update_date_button;
+    private boolean update_time_button;
 
     private long currentDateInMilliSec,taskDateInMilliSec;
     private TaskDatabase db;
@@ -42,7 +42,7 @@ public class Dodavanje extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dodavanje);
-        Log.d("OnCreate","Dodavanje");
+
 
         //find all views
         name=(EditText)findViewById(R.id.imezadatka);
@@ -58,12 +58,13 @@ public class Dodavanje extends Activity {
         cancel=(Button)findViewById(R.id.button5);
         reminder=(CheckBox)findViewById(R.id.checkbox);
 
-
         main_intent= new Intent(Dodavanje.this,MainActivity.class);
         convertCal = Calendar.getInstance();
         myCalendar =Calendar.getInstance();
         task = new Task();
         priority=-1;
+        update_time_button = false;
+        update_date_button = false;
 
         db = new TaskDatabase(Dodavanje.this);
 
@@ -81,9 +82,12 @@ public class Dodavanje extends Activity {
         //popunjavam polja sa poljima iz zadatka na koje sam uradio long pres
         if (id_zadatka!=-1) {
             Task task_database = db.readTask(id_zadatka);
+                int mesec = task_database.getMesec() + 1; //jer mutavi januar je nulti mesec, a ovde mi samo sluzi za ispis pa treba da mi je ako je maj, da ispise da je to 5 mesec, a ne 4ti
+                Log.d("TASK_DATABASE_GET_MESEC",String.valueOf(mesec));
 
+                Log.d("TAG","Just printing-> " +String.valueOf(task_database.getDan()) + "/"+ String.valueOf(mesec) +"/"+String.valueOf(task_database.getGodina()) + "@" + String.valueOf(task_database.getSat()) + ":"+String.valueOf(task_database.getMinut()));
                 name.setText(task_database.getName());
-                entered_date.setText(task_database.getDan() + "/" + task_database.getMesec() + "/" + task_database.getGodina());
+                entered_date.setText(task_database.getDan() + "/" + mesec + "/" + task_database.getGodina());
                 desq.setText(task_database.getDesq());
                 //entered time kako uraditi, nzm sad
 
@@ -223,7 +227,8 @@ public class Dodavanje extends Activity {
                         currentDateInMilliSec = myCalendar.getTimeInMillis();
 
 
-                        convertCal.set(myYear, myMonth - 1, myDay, myHour, myMinute, 0);
+                        convertCal.set(myYear, myMonth, myDay, myHour, myMinute, 0);
+                        Log.d("TAG","Adding new task-> " +String.valueOf(myDay) + "/"+ String.valueOf(myMonth) +"/"+String.valueOf(myYear) +"@"+String.valueOf(myHour)+":"+String.valueOf(myMinute) +"Buttons state-> "+ "Date: "+String.valueOf(update_date_button) + " Time: "+String.valueOf(update_time_button));
                         dayInWeek = convertCal.get(Calendar.DAY_OF_WEEK);
                         taskDateInMilliSec = convertCal.getTimeInMillis();
 
@@ -270,7 +275,7 @@ public class Dodavanje extends Activity {
                             remind = reminder.isChecked();
 
                             task.setGodina(myYear);
-                            task.setMesec(myMonth-1);
+                            task.setMesec(myMonth);
                             task.setDan(myDay);
                             task.setSat(myHour);
                             task.setMinut(myMinute);
@@ -331,10 +336,13 @@ public class Dodavanje extends Activity {
 
 
 
+
                         //ako stisnem samo date
-                        if(update_time_button == false) {
-                            Toast.makeText(getApplication().getBaseContext(), String.valueOf(myYear) + "/" + String.valueOf(myMonth-1) + "/" + String.valueOf(myDay) + String.valueOf(t.getSat()) + ":" + String.valueOf(t.getMinut()) , Toast.LENGTH_LONG).show();
-                            convertCal.set(myYear,myMonth-1,myDay,t.getSat(), t.getMinut());
+                        if (update_time_button == false && update_date_button == true) {
+                            //Toast.makeText(getApplication().getBaseContext(), String.valueOf(myYear) + "/" + String.valueOf(myMonth) + "/" + String.valueOf(myDay) + String.valueOf(t.getSat()) + ":" + String.valueOf(t.getMinut()) , Toast.LENGTH_LONG).show();
+                            convertCal.set(myYear, myMonth, myDay, t.getSat(), t.getMinut(),0);
+                            Log.d("TAG", "Update,only date pressed-> " + String.valueOf(myDay) + "/" + String.valueOf(myMonth) + "/" + String.valueOf(myYear) + "@" + String.valueOf(t.getSat()) + ":" + String.valueOf(t.getMinut()) + "Buttons state-> "+ "Date: "+String.valueOf(update_date_button) + " Time: "+String.valueOf(update_time_button));
+
                             dayInWeek = convertCal.get(Calendar.DAY_OF_WEEK);
                             taskDateInMilliSec = convertCal.getTimeInMillis();
 
@@ -374,11 +382,12 @@ public class Dodavanje extends Activity {
 
                         }
 
-
-                        if(update_date_button == false) {
+                        if (update_date_button == false && update_time_button == true) {
                             //znaci stisnuo sam samo time
-                            Toast.makeText(getApplication().getBaseContext(), String.valueOf(t.getGodina())+ "/" + String.valueOf(t.getMesec()) + "/" + String.valueOf(t.getDan()) + String.valueOf(myHour) + ":" + String.valueOf(myMinute) , Toast.LENGTH_LONG).show();
-                            convertCal.set(t.getGodina(),t.getMesec(),t.getDan(),myHour, myMinute);
+                            //Toast.makeText(getApplication().getBaseContext(), String.valueOf(t.getGodina())+ "/" + String.valueOf(t.getMesec()) + "/" + String.valueOf(t.getDan()) + String.valueOf(myHour) + ":" + String.valueOf(myMinute) , Toast.LENGTH_LONG).show();
+                            convertCal.set(t.getGodina(), t.getMesec(), t.getDan(), myHour, myMinute,0);
+                            Log.d("TAG", "Update only time pressed-> " + String.valueOf(t.getDan()) + "/" + String.valueOf(t.getMesec()) + "/" + String.valueOf(t.getGodina()) + "@" + String.valueOf(myHour) + ":" + String.valueOf(myMinute) + "Buttons state-> "+ "Date: "+String.valueOf(update_date_button) + " Time: "+String.valueOf(update_time_button));
+
                             dayInWeek = convertCal.get(Calendar.DAY_OF_WEEK);
                             taskDateInMilliSec = convertCal.getTimeInMillis();
 
@@ -418,12 +427,110 @@ public class Dodavanje extends Activity {
 
                         }
 
+
+
+                        //ako nisam stisnuo ni time ni date
+                        if (update_date_button == false && update_time_button == false)
+                        {
+                            //nisam stisnuo ni time ni date, preuzmi iz taska i vreme i datum
+
+                            //Toast.makeText(getApplication().getBaseContext(), String.valueOf(t.getGodina())+ "/" + String.valueOf(t.getMesec()) + "/" + String.valueOf(t.getDan()) + String.valueOf(t.getSat()) + ":" + String.valueOf(t.getMinut()) , Toast.LENGTH_LONG).show();
+                            convertCal.set(t.getGodina(),t.getMesec(),t.getDan(),t.getSat(), t.getMinut(),0);
+                            Log.d("TAG","Update,nothing pressed-> " + String.valueOf(t.getDan()) + "/"+ String.valueOf(t.getMesec()) +"/"+String.valueOf(t.getGodina()) +"@"+String.valueOf(t.getSat())+":"+String.valueOf(t.getMinut()) + "Buttons state-> "+ "Date: "+String.valueOf(update_date_button) + " Time: "+String.valueOf(update_time_button));
+
+                            dayInWeek = convertCal.get(Calendar.DAY_OF_WEEK);
+                            taskDateInMilliSec = convertCal.getTimeInMillis();
+
+                            if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) == 0)
+                                date = getResources().getString(R.string.danas);
+                            else if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) == 1)
+                                date = getResources().getString(R.string.sutra);
+                            else if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) == 2)
+                                date = getResources().getString(R.string.prekosutra);
+                            else if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) >= 2 && (taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) <= 7) {
+                                switch (dayInWeek) {
+                                    case 1:
+                                        date = getResources().getString(R.string.nedelja);
+                                        break;
+                                    case 2:
+                                        date = getResources().getString(R.string.ponedeljak);
+                                        break;
+                                    case 3:
+                                        date = getResources().getString(R.string.utorak);
+                                        break;
+                                    case 4:
+                                        date = getResources().getString(R.string.sreda);
+                                        break;
+                                    case 5:
+                                        date = getResources().getString(R.string.cetvrtak);
+                                        break;
+                                    case 6:
+                                        date = getResources().getString(R.string.petak);
+                                        break;
+                                    case 7:
+                                        date = getResources().getString(R.string.subota);
+                                        break;
+                                }
+                            } else {
+                                date = entered_date.getText().toString();
+                            }
+                        }
+
+                        //ako sam stisnuo oba
+
+                        if (update_date_button == true && update_time_button == true)
+                        {
+                            //stisnuo sam i time i date, znaci pokupi iz lisenera
+
+                            //Toast.makeText(getApplication().getBaseContext(), String.valueOf(t.getGodina())+ "/" + String.valueOf(t.getMesec()) + "/" + String.valueOf(t.getDan()) + String.valueOf(t.getSat()) + ":" + String.valueOf(t.getMinut()) , Toast.LENGTH_LONG).show();
+                            convertCal.set(myYear,myMonth,myDay,myHour, myMinute,0);
+                            Log.d("TAG","Update,both pressed-> " + String.valueOf(myDay) + "/"+ String.valueOf(myMonth) +"/"+String.valueOf(myYear) +"@"+String.valueOf(myHour)+":"+String.valueOf(myMinute) + "Buttons state-> "+ "Date: "+String.valueOf(update_date_button) + " Time: "+String.valueOf(update_time_button));
+
+                            dayInWeek = convertCal.get(Calendar.DAY_OF_WEEK);
+                            taskDateInMilliSec = convertCal.getTimeInMillis();
+
+                            if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) == 0)
+                                date = getResources().getString(R.string.danas);
+                            else if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) == 1)
+                                date = getResources().getString(R.string.sutra);
+                            else if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) == 2)
+                                date = getResources().getString(R.string.prekosutra);
+                            else if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) >= 2 && (taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) <= 7) {
+                                switch (dayInWeek) {
+                                    case 1:
+                                        date = getResources().getString(R.string.nedelja);
+                                        break;
+                                    case 2:
+                                        date = getResources().getString(R.string.ponedeljak);
+                                        break;
+                                    case 3:
+                                        date = getResources().getString(R.string.utorak);
+                                        break;
+                                    case 4:
+                                        date = getResources().getString(R.string.sreda);
+                                        break;
+                                    case 5:
+                                        date = getResources().getString(R.string.cetvrtak);
+                                        break;
+                                    case 6:
+                                        date = getResources().getString(R.string.petak);
+                                        break;
+                                    case 7:
+                                        date = getResources().getString(R.string.subota);
+                                        break;
+                                }
+                            } else {
+                                date = entered_date.getText().toString();
+                            }
+                        }
 
 
 
                         if (taskDateInMilliSec - currentDateInMilliSec <= 1000 * 60 * 1 && reminder.isChecked()) {
                             reminder.setChecked(false);
-                            Toast.makeText(getApplication().getBaseContext(), "Ne moze reminder,istice za manje od 15 minuta, promenite vreme", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getApplication().getBaseContext(), "Ne moze reminder,istice za manje od 15 minuta, promenite vreme", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getApplication().getBaseContext(), String.valueOf(myYear) + "/" + String.valueOf(myMonth) + "/" + String.valueOf(myDay) + String.valueOf(t.getSat()) + ":" + String.valueOf(t.getMinut()) , Toast.LENGTH_LONG).show();
+
                         } else {
 
 
@@ -493,9 +600,10 @@ public class Dodavanje extends Activity {
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth)
                     {
                         myDay = dayOfMonth;
-                        myMonth = month + 1;
+                        myMonth = month;
                         myYear = year;
-                        entered_date.setText(myDay + "/" + myMonth +"/" + myYear);
+                        int jebemTiMesec = myMonth+1;
+                        entered_date.setText(myDay + "/" + jebemTiMesec +"/" + myYear);
 
 
                     }
@@ -542,5 +650,14 @@ public class Dodavanje extends Activity {
 
         });
 
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        update_date_button = false;
+        update_time_button = false;
+        Log.d("TAG","Buttons state-> "+ "Date: "+String.valueOf(update_date_button) + " Time: "+String.valueOf(update_time_button));
     }
 }

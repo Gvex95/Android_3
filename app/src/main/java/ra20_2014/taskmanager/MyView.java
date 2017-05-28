@@ -77,7 +77,7 @@ public class MyView extends View {
     }
 
 
-    public void neka_funkcija(final float h_percent, final float m_percent, final float l_percent){
+    public void iscrtaj(final float h_percent, final float m_percent, final float l_percent){
         new Thread(new Runnable() {
 
             @Override

@@ -33,5 +33,7 @@
     <string name="unesite_datum">Unesite datum</string>
     <string name="unesite_vreme">Unesite vreme</string>
     <string name="unesite_prioritet">Unesite prioritet</string>
+    <string name="back">Nazad</string>
+
 
 </resources>
