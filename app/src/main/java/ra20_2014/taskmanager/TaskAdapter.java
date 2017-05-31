@@ -19,9 +19,10 @@ import java.util.ArrayList;
  * Created by mgsti on 4/23/2017.
  */
 
-public class TaskAdapter extends BaseAdapter {
+public  class TaskAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<Task> mTasks;
+    private TaskDatabase db;
 
 
     public TaskAdapter(Context context){
@@ -71,7 +72,7 @@ public class TaskAdapter extends BaseAdapter {
 
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
             View view = convertView;
             if (view == null){
@@ -81,7 +82,7 @@ public class TaskAdapter extends BaseAdapter {
                 ViewHolder holder = new ViewHolder ();
 
                 holder.name = (TextView) view.findViewById(R.id.ime_zadatka);
-                holder.priority = view.findViewById(R.id.prioritet);
+                holder.priority =  view.findViewById(R.id.prioritet);
                 holder.date = (TextView) view.findViewById(R.id.datum);
                 holder.check = (CheckBox) view.findViewById(R.id.zavrsen_zadatak);
                 holder.reminder = (RadioButton) view.findViewById(R.id.podsetnik);
@@ -107,14 +108,22 @@ public class TaskAdapter extends BaseAdapter {
         holder.check.setChecked(task.check);
         holder.check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public  void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
-                    task.check =true;
+                    task.setCheck(true);
                     holder.name.setPaintFlags(holder.name.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    db = new TaskDatabase(mContext);
+                    db.getWritableDatabase();
+                    db.updateTask(task,position);
+                    //holder.name.setPaintFlags(holder.name.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
                 }else{
-                    task.check = false;
+                    task.setCheck(false);
                     holder.name.setPaintFlags(0);
+                    db = new TaskDatabase(mContext);
+                    db.getWritableDatabase();
+                    db.updateTask(task,position);
+                    //holder.name.setPaintFlags(0);
                 }
             }
         });

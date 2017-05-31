@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by isi24 on 25-May-17.
  */
 
-public class TaskDatabase extends SQLiteOpenHelper {
+public  class TaskDatabase extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "taskovi.db";
     private static final int DATABASE_VERSION = 1;
     private static final String TABLE_NAME = "tabela";
@@ -175,7 +175,7 @@ public class TaskDatabase extends SQLiteOpenHelper {
             checked=true;
         else
             checked = false;
-        return new Task(name,priority,reminder,msec,desq,checked,godina,mesec,dan,sat,minut,data);
+        return new Task(name,priority,reminder,desq,checked,godina,mesec,dan,sat,minut,data);
 
     }
 }

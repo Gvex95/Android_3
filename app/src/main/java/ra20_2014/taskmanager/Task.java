@@ -12,7 +12,7 @@ public class Task implements Serializable {
     public int priority,godina,mesec,dan,sat,minut;
     public boolean reminder,check;
 
-    public Task(String name, int priority, boolean reminder, long time_in_msec,String desq,boolean check,int godina,int mesec,int dan,int sat,int minut,String data) {
+    public Task(String name, int priority, boolean reminder,String desq,boolean check,int godina,int mesec,int dan,int sat,int minut,String data) {
         this.name = name;
         this.godina = godina;
         this.mesec = mesec;
