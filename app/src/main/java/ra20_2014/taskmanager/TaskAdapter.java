@@ -89,7 +89,8 @@ public  class TaskAdapter extends BaseAdapter {
             view.setTag(holder);
 
         }
-        final Task task = (Task) getItem(position);
+        db = new TaskDatabase(mContext);
+        final Task task = db.readTask(position);
         final ViewHolder holder = (ViewHolder) view.getTag();
         //prioritet
         holder.name.setText(task.name);
@@ -127,6 +128,14 @@ public  class TaskAdapter extends BaseAdapter {
                 }
             }
         });
+        if (task.isCheck()){
+            holder.name.setPaintFlags(holder.name.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }
+        else
+        {
+            holder.name.setPaintFlags(0);
+        }
+
         holder.date.setText(task.getData());
         holder.reminder.setChecked(task.reminder);
 
