@@ -20,7 +20,9 @@ public class Statistika extends Activity {
     private Button back;
     private RelativeLayout relativeLayout;
     private TaskDatabase db = new TaskDatabase(Statistika.this);
-    private float broj_taskova = 0;
+    private float crveni_precrtani = 0;
+    private float zuti_precrtani = 0;
+    private float zeleni_precrtani = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,22 +46,40 @@ public class Statistika extends Activity {
         Log.d("Statistika","7");
         if (tasks!=null) {
             for (i = 0; i < tasks.length; i++) {
-                if (tasks[i].getPriority() == 1) {
-                    h_counter++;
-                } else if (tasks[i].getPriority() == 2) {
-                    m_counter++;
-                } else
-                    l_counter++;
+                    if (tasks[i].getPriority() == 1) {
+                        h_counter++;
+                    } else if (tasks[i].getPriority() == 2) {
+                        m_counter++;
+                    } else {
+                        l_counter++;
+                    }
+
+                if (tasks[i].isCheck() && tasks[i].getPriority() == 1){
+                    crveni_precrtani++;
+                }if (tasks[i].isCheck() && tasks[i].getPriority() == 2){
+                    zuti_precrtani++;
+                }if (tasks[i].isCheck() && tasks[i].getPriority() == 3){
+                    zeleni_precrtani++;
+                }
+
             }
-           broj_taskova = tasks.length;
+
         }
         Log.d("Statistika","8");
 
 
         Log.d("Statistika","9");
-        h_percent = (h_counter/broj_taskova)*100;
-        m_percent = (m_counter/broj_taskova)*100;
-        l_percent = (l_counter/broj_taskova)*100;
+        Log.d("TAG->BROJ_TASKOVA",String.valueOf(crveni_precrtani));
+        Log.d("TAG->BROJ_TASKOVA",String.valueOf(zuti_precrtani));
+        Log.d("TAG->BROJ_TASKOVA",String.valueOf(zeleni_precrtani));
+        Log.d("TAG->BROJ_TASKOVA",String.valueOf(h_counter));
+        Log.d("TAG->BROJ_TASKOVA",String.valueOf(m_counter));
+        Log.d("TAG->BROJ_TASKOVA",String.valueOf(l_counter));
+
+
+        h_percent = (crveni_precrtani/h_counter)*100;
+        m_percent = (zuti_precrtani/m_counter)*100;
+        l_percent = (zeleni_precrtani/l_counter)*100;
 
         Log.d("Statistika","10");
 
