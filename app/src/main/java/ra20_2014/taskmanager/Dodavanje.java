@@ -25,12 +25,11 @@ public class Dodavanje extends Activity {
     private  Calendar myCalendar,convertCal;
     private  int currentDay,currentMonth,currentYear,currentHour,currentMin;
     private  int myYear,myDay,myMonth,myHour,myMinute;
-    private  int priority,dayInWeek,id_zadatka;
+    private  int priority,id_zadatka;
     private  Task task;
     private CheckBox reminder;
-    private String taskName,left,right,date;
+    private String taskName;
     private boolean remind;
-    private Intent main_intent;
     private boolean update_date_button;
     private boolean update_time_button;
 
@@ -58,7 +57,7 @@ public class Dodavanje extends Activity {
         cancel=(Button)findViewById(R.id.button5);
         reminder=(CheckBox)findViewById(R.id.checkbox);
 
-        main_intent= new Intent(Dodavanje.this,MainActivity.class);
+
         convertCal = Calendar.getInstance();
         myCalendar =Calendar.getInstance();
         task = new Task();
@@ -226,7 +225,7 @@ public class Dodavanje extends Activity {
                         currentDateInMilliSec = myCalendar.getTimeInMillis();
                         convertCal.set(myYear, myMonth, myDay, myHour, myMinute, 0);
                         Log.d("TAG","Adding new task-> " +String.valueOf(myDay) + "/"+ String.valueOf(myMonth) +"/"+String.valueOf(myYear) +"@"+String.valueOf(myHour)+":"+String.valueOf(myMinute) +"Buttons state-> "+ "Date: "+String.valueOf(update_date_button) + " Time: "+String.valueOf(update_time_button));
-                        dayInWeek = convertCal.get(Calendar.DAY_OF_WEEK);
+
                         taskDateInMilliSec = convertCal.getTimeInMillis();
 
 
@@ -293,8 +292,6 @@ public class Dodavanje extends Activity {
                             //Toast.makeText(getApplication().getBaseContext(), String.valueOf(myYear) + "/" + String.valueOf(myMonth) + "/" + String.valueOf(myDay) + String.valueOf(t.getSat()) + ":" + String.valueOf(t.getMinut()) , Toast.LENGTH_LONG).show();
                             convertCal.set(myYear, myMonth, myDay, t.getSat(), t.getMinut(),0);
                             Log.d("TAG", "Update,only date pressed-> " + String.valueOf(myDay) + "/" + String.valueOf(myMonth) + "/" + String.valueOf(myYear) + "@" + String.valueOf(t.getSat()) + ":" + String.valueOf(t.getMinut()) + "Buttons state-> "+ "Date: "+String.valueOf(update_date_button) + " Time: "+String.valueOf(update_time_button));
-
-                            dayInWeek = convertCal.get(Calendar.DAY_OF_WEEK);
                             taskDateInMilliSec = convertCal.getTimeInMillis();
 
 
@@ -305,8 +302,6 @@ public class Dodavanje extends Activity {
                             //Toast.makeText(getApplication().getBaseContext(), String.valueOf(t.getGodina())+ "/" + String.valueOf(t.getMesec()) + "/" + String.valueOf(t.getDan()) + String.valueOf(myHour) + ":" + String.valueOf(myMinute) , Toast.LENGTH_LONG).show();
                             convertCal.set(t.getGodina(), t.getMesec(), t.getDan(), myHour, myMinute,0);
                             Log.d("TAG", "Update only time pressed-> " + String.valueOf(t.getDan()) + "/" + String.valueOf(t.getMesec()) + "/" + String.valueOf(t.getGodina()) + "@" + String.valueOf(myHour) + ":" + String.valueOf(myMinute) + "Buttons state-> "+ "Date: "+String.valueOf(update_date_button) + " Time: "+String.valueOf(update_time_button));
-
-                            dayInWeek = convertCal.get(Calendar.DAY_OF_WEEK);
                             taskDateInMilliSec = convertCal.getTimeInMillis();
                         }
 
@@ -320,8 +315,6 @@ public class Dodavanje extends Activity {
                             //Toast.makeText(getApplication().getBaseContext(), String.valueOf(t.getGodina())+ "/" + String.valueOf(t.getMesec()) + "/" + String.valueOf(t.getDan()) + String.valueOf(t.getSat()) + ":" + String.valueOf(t.getMinut()) , Toast.LENGTH_LONG).show();
                             convertCal.set(t.getGodina(),t.getMesec(),t.getDan(),t.getSat(), t.getMinut(),0);
                             Log.d("TAG","Update,nothing pressed-> " + String.valueOf(t.getDan()) + "/"+ String.valueOf(t.getMesec()) +"/"+String.valueOf(t.getGodina()) +"@"+String.valueOf(t.getSat())+":"+String.valueOf(t.getMinut()) + "Buttons state-> "+ "Date: "+String.valueOf(update_date_button) + " Time: "+String.valueOf(update_time_button));
-
-                            dayInWeek = convertCal.get(Calendar.DAY_OF_WEEK);
                             taskDateInMilliSec = convertCal.getTimeInMillis();
 
                         }
@@ -335,8 +328,6 @@ public class Dodavanje extends Activity {
                             //Toast.makeText(getApplication().getBaseContext(), String.valueOf(t.getGodina())+ "/" + String.valueOf(t.getMesec()) + "/" + String.valueOf(t.getDan()) + String.valueOf(t.getSat()) + ":" + String.valueOf(t.getMinut()) , Toast.LENGTH_LONG).show();
                             convertCal.set(myYear,myMonth,myDay,myHour, myMinute,0);
                             Log.d("TAG","Update,both pressed-> " + String.valueOf(myDay) + "/"+ String.valueOf(myMonth) +"/"+String.valueOf(myYear) +"@"+String.valueOf(myHour)+":"+String.valueOf(myMinute) + "Buttons state-> "+ "Date: "+String.valueOf(update_date_button) + " Time: "+String.valueOf(update_time_button));
-
-                            dayInWeek = convertCal.get(Calendar.DAY_OF_WEEK);
                             taskDateInMilliSec = convertCal.getTimeInMillis();
                         }
 
