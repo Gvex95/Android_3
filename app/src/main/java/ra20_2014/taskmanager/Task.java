@@ -8,11 +8,11 @@ import java.util.Calendar;
  */
 
 public class Task implements Serializable {
-    public String name,desq,data;
-    public int priority,godina,mesec,dan,sat,minut;
+    public String name,desq;
+    public int priority,godina,mesec,dan,sat,minut,dayInWeek;
     public boolean reminder,check;
 
-    public Task(String name, int priority, boolean reminder,String desq,boolean check,int godina,int mesec,int dan,int sat,int minut,String data) {
+    public Task(String name, int priority, boolean reminder,String desq,boolean check,int godina,int mesec,int dan,int sat,int minut) {
         this.name = name;
         this.godina = godina;
         this.mesec = mesec;
@@ -23,7 +23,7 @@ public class Task implements Serializable {
         this.reminder = reminder;
         this.desq = desq;
         this.check = check;
-        this.data = data;
+
     }
     public Task(){
         this.name="";
@@ -36,17 +36,10 @@ public class Task implements Serializable {
         this.reminder=false;
         this.desq = "";
         this.check = false;
-        this.data = "";
-
     }
 
-    public String getData() {
-        return data;
-    }
 
-    public void setData(String data) {
-        this.data = data;
-    }
+
 
     public long getTimeInMsec(){
         Calendar c = Calendar.getInstance();
@@ -54,6 +47,9 @@ public class Task implements Serializable {
         long msec = c.getTimeInMillis();
         return msec;
     }
+
+
+
 
     public int getGodina() {
         return godina;

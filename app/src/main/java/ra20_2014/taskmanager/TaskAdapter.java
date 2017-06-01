@@ -1,6 +1,7 @@
 package ra20_2014.taskmanager;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -14,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by mgsti on 4/23/2017.
@@ -23,6 +25,8 @@ public  class TaskAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<Task> mTasks;
     private TaskDatabase db;
+    private String date;
+    private int dayInWeek;
 
 
     public TaskAdapter(Context context){
@@ -136,7 +140,52 @@ public  class TaskAdapter extends BaseAdapter {
             holder.name.setPaintFlags(0);
         }
 
-        holder.date.setText(task.getData());
+        long oneDayinMillis = 1000 * 60 * 60 * 24;
+        long taskDateInMilliSec = task.getTimeInMsec();
+        Calendar c = Calendar.getInstance();
+        long currentDateInMilliSec = c.getTimeInMillis();
+
+        Calendar convertCalendar = Calendar.getInstance();
+        convertCalendar.set(task.getGodina(),task.getMesec(),task.getDan(),task.getSat(),task.getMinut());
+        dayInWeek = convertCalendar.get(Calendar.DAY_OF_WEEK);
+
+
+        if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) == 0)
+            date = mContext.getResources().getString(R.string.danas);
+        else if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) == 1)
+            date = mContext.getResources().getString(R.string.sutra);
+        else if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) == 2)
+            date = mContext.getResources().getString(R.string.prekosutra);
+        else if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) >= 2 && (taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) <= 7) {
+            switch (dayInWeek) {
+                case 1:
+                    date = mContext.getResources().getString(R.string.nedelja);
+                    break;
+                case 2:
+                    date = mContext.getResources().getString(R.string.ponedeljak);
+                    break;
+                case 3:
+                    date = mContext.getResources().getString(R.string.utorak);
+                    break;
+                case 4:
+                    date = mContext.getResources().getString(R.string.sreda);
+                    break;
+                case 5:
+                    date = mContext.getResources().getString(R.string.cetvrtak);
+                    break;
+                case 6:
+                    date = mContext.getResources().getString(R.string.petak);
+                    break;
+                case 7:
+                    date = mContext.getResources().getString(R.string.subota);
+                    break;
+            }
+        } else {
+            date = Integer.toString(task.getDan()) + "/" + Integer.toString(task.getMesec()) + "/" + Integer.toString(task.getGodina());
+        }
+
+
+        holder.date.setText(date);
         holder.reminder.setChecked(task.reminder);
 
         return  view;

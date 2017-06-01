@@ -222,50 +222,13 @@ public class Dodavanje extends Activity {
                         Toast toast = Toast.makeText(getApplicationContext(), getResources().getString(R.string.unesite_prioritet), Toast.LENGTH_SHORT);
                         toast.show();
                     } else {
-                        long oneDayinMillis = 1000 * 60 * 60 * 24;
 
                         currentDateInMilliSec = myCalendar.getTimeInMillis();
-
-
                         convertCal.set(myYear, myMonth, myDay, myHour, myMinute, 0);
                         Log.d("TAG","Adding new task-> " +String.valueOf(myDay) + "/"+ String.valueOf(myMonth) +"/"+String.valueOf(myYear) +"@"+String.valueOf(myHour)+":"+String.valueOf(myMinute) +"Buttons state-> "+ "Date: "+String.valueOf(update_date_button) + " Time: "+String.valueOf(update_time_button));
                         dayInWeek = convertCal.get(Calendar.DAY_OF_WEEK);
                         taskDateInMilliSec = convertCal.getTimeInMillis();
 
-
-                        if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) == 0)
-                            date = getResources().getString(R.string.danas);
-                        else if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) == 1)
-                            date = getResources().getString(R.string.sutra);
-                        else if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) == 2)
-                            date = getResources().getString(R.string.prekosutra);
-                        else if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) >= 2 && (taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) <= 7) {
-                            switch (dayInWeek) {
-                                case 1:
-                                    date = getResources().getString(R.string.nedelja);
-                                    break;
-                                case 2:
-                                    date = getResources().getString(R.string.ponedeljak);
-                                    break;
-                                case 3:
-                                    date = getResources().getString(R.string.utorak);
-                                    break;
-                                case 4:
-                                    date = getResources().getString(R.string.sreda);
-                                    break;
-                                case 5:
-                                    date = getResources().getString(R.string.cetvrtak);
-                                    break;
-                                case 6:
-                                    date = getResources().getString(R.string.petak);
-                                    break;
-                                case 7:
-                                    date = getResources().getString(R.string.subota);
-                                    break;
-                            }
-                        } else {
-                            date = entered_date.getText().toString();
-                        }
 
                         if (taskDateInMilliSec - currentDateInMilliSec <= 1000 * 60 * 5 && reminder.isChecked()) {
                             reminder.setChecked(false);
@@ -281,7 +244,6 @@ public class Dodavanje extends Activity {
                             task.setMinut(myMinute);
 
                             task.setName(taskName);
-                            task.setData(date);
                             task.setPriority(priority);
                             task.setReminder(remind);
                             task.setDesq(desq.getText().toString());
@@ -289,10 +251,7 @@ public class Dodavanje extends Activity {
                             db.addTask(task);
 
                             Intent returnIntent = new Intent(Dodavanje.this, MainActivity.class);
-                            //returnIntent.putExtra("dodajTask", task);
-                            //setResult(Dodavanje.RESULT_OK, returnIntent);
                             startActivity(returnIntent);
-                            //finish();
                         }
                     }
                 }
@@ -325,17 +284,9 @@ public class Dodavanje extends Activity {
                         Toast toast = Toast.makeText(getApplicationContext(), getResources().getString(R.string.unesite_prioritet), Toast.LENGTH_SHORT);
                         toast.show();
                     } else {
-                        long oneDayinMillis = 1000 * 60 * 60 * 24;
 
                         currentDateInMilliSec = myCalendar.getTimeInMillis();
-
                         Task t = db.readTask(id_zadatka);
-
-
-
-
-
-
 
                         //ako stisnem samo date
                         if (update_time_button == false && update_date_button == true) {
@@ -346,39 +297,6 @@ public class Dodavanje extends Activity {
                             dayInWeek = convertCal.get(Calendar.DAY_OF_WEEK);
                             taskDateInMilliSec = convertCal.getTimeInMillis();
 
-                            if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) == 0)
-                                date = getResources().getString(R.string.danas);
-                            else if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) == 1)
-                                date = getResources().getString(R.string.sutra);
-                            else if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) == 2)
-                                date = getResources().getString(R.string.prekosutra);
-                            else if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) >= 2 && (taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) <= 7) {
-                                switch (dayInWeek) {
-                                    case 1:
-                                        date = getResources().getString(R.string.nedelja);
-                                        break;
-                                    case 2:
-                                        date = getResources().getString(R.string.ponedeljak);
-                                        break;
-                                    case 3:
-                                        date = getResources().getString(R.string.utorak);
-                                        break;
-                                    case 4:
-                                        date = getResources().getString(R.string.sreda);
-                                        break;
-                                    case 5:
-                                        date = getResources().getString(R.string.cetvrtak);
-                                        break;
-                                    case 6:
-                                        date = getResources().getString(R.string.petak);
-                                        break;
-                                    case 7:
-                                        date = getResources().getString(R.string.subota);
-                                        break;
-                                }
-                            } else {
-                                date = entered_date.getText().toString();
-                            }
 
                         }
 
@@ -390,41 +308,6 @@ public class Dodavanje extends Activity {
 
                             dayInWeek = convertCal.get(Calendar.DAY_OF_WEEK);
                             taskDateInMilliSec = convertCal.getTimeInMillis();
-
-                            if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) == 0)
-                                date = getResources().getString(R.string.danas);
-                            else if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) == 1)
-                                date = getResources().getString(R.string.sutra);
-                            else if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) == 2)
-                                date = getResources().getString(R.string.prekosutra);
-                            else if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) >= 2 && (taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) <= 7) {
-                                switch (dayInWeek) {
-                                    case 1:
-                                        date = getResources().getString(R.string.nedelja);
-                                        break;
-                                    case 2:
-                                        date = getResources().getString(R.string.ponedeljak);
-                                        break;
-                                    case 3:
-                                        date = getResources().getString(R.string.utorak);
-                                        break;
-                                    case 4:
-                                        date = getResources().getString(R.string.sreda);
-                                        break;
-                                    case 5:
-                                        date = getResources().getString(R.string.cetvrtak);
-                                        break;
-                                    case 6:
-                                        date = getResources().getString(R.string.petak);
-                                        break;
-                                    case 7:
-                                        date = getResources().getString(R.string.subota);
-                                        break;
-                                }
-                            } else {
-                                date = entered_date.getText().toString();
-                            }
-
                         }
 
 
@@ -441,39 +324,6 @@ public class Dodavanje extends Activity {
                             dayInWeek = convertCal.get(Calendar.DAY_OF_WEEK);
                             taskDateInMilliSec = convertCal.getTimeInMillis();
 
-                            if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) == 0)
-                                date = getResources().getString(R.string.danas);
-                            else if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) == 1)
-                                date = getResources().getString(R.string.sutra);
-                            else if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) == 2)
-                                date = getResources().getString(R.string.prekosutra);
-                            else if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) >= 2 && (taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) <= 7) {
-                                switch (dayInWeek) {
-                                    case 1:
-                                        date = getResources().getString(R.string.nedelja);
-                                        break;
-                                    case 2:
-                                        date = getResources().getString(R.string.ponedeljak);
-                                        break;
-                                    case 3:
-                                        date = getResources().getString(R.string.utorak);
-                                        break;
-                                    case 4:
-                                        date = getResources().getString(R.string.sreda);
-                                        break;
-                                    case 5:
-                                        date = getResources().getString(R.string.cetvrtak);
-                                        break;
-                                    case 6:
-                                        date = getResources().getString(R.string.petak);
-                                        break;
-                                    case 7:
-                                        date = getResources().getString(R.string.subota);
-                                        break;
-                                }
-                            } else {
-                                date = entered_date.getText().toString();
-                            }
                         }
 
                         //ako sam stisnuo oba
@@ -488,42 +338,7 @@ public class Dodavanje extends Activity {
 
                             dayInWeek = convertCal.get(Calendar.DAY_OF_WEEK);
                             taskDateInMilliSec = convertCal.getTimeInMillis();
-
-                            if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) == 0)
-                                date = getResources().getString(R.string.danas);
-                            else if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) == 1)
-                                date = getResources().getString(R.string.sutra);
-                            else if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) == 2)
-                                date = getResources().getString(R.string.prekosutra);
-                            else if ((taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) >= 2 && (taskDateInMilliSec / oneDayinMillis) - (currentDateInMilliSec / oneDayinMillis) <= 7) {
-                                switch (dayInWeek) {
-                                    case 1:
-                                        date = getResources().getString(R.string.nedelja);
-                                        break;
-                                    case 2:
-                                        date = getResources().getString(R.string.ponedeljak);
-                                        break;
-                                    case 3:
-                                        date = getResources().getString(R.string.utorak);
-                                        break;
-                                    case 4:
-                                        date = getResources().getString(R.string.sreda);
-                                        break;
-                                    case 5:
-                                        date = getResources().getString(R.string.cetvrtak);
-                                        break;
-                                    case 6:
-                                        date = getResources().getString(R.string.petak);
-                                        break;
-                                    case 7:
-                                        date = getResources().getString(R.string.subota);
-                                        break;
-                                }
-                            } else {
-                                date = entered_date.getText().toString();
-                            }
                         }
-
 
 
                         if (taskDateInMilliSec - currentDateInMilliSec <= 1000 * 60 * 5 && reminder.isChecked()) {
@@ -533,13 +348,12 @@ public class Dodavanje extends Activity {
 
                         } else {
 
-
+                            //popuni sva polja
 
                             taskName = name.getText().toString();
                             remind = reminder.isChecked();
 
                             t.setName(taskName);
-                            t.setData(date);
                             t.setDesq(desq.getText().toString());
                             t.setPriority(priority);
                             t.setReminder(remind);
@@ -561,16 +375,9 @@ public class Dodavanje extends Activity {
 
                             }
 
-
-
                             db.updateTask(t, id_zadatka);
-
                             Intent returnIntent = new Intent(Dodavanje.this, MainActivity.class);
-                            //returnIntent.putExtra("dodajTask", task);
-                            //setResult(Dodavanje.RESULT_OK, returnIntent);
                             startActivity(returnIntent);
-                            //finish();
-
                         }
                     }
                 }
