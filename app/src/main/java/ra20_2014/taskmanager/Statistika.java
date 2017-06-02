@@ -20,6 +20,7 @@ public class Statistika extends Activity {
     private Button back;
     private RelativeLayout relativeLayout;
     private TaskDatabase db = new TaskDatabase(Statistika.this);
+    private NativeClass nativna_klasa;
     private float crveni_precrtani = 0;
     private float zuti_precrtani = 0;
     private float zeleni_precrtani = 0;
@@ -44,6 +45,8 @@ public class Statistika extends Activity {
         Task[] tasks = db.readTasks();
         int i;
         Log.d("Statistika","7");
+        nativna_klasa = new NativeClass();
+
         if (tasks!=null) {
             for (i = 0; i < tasks.length; i++) {
                     if (tasks[i].getPriority() == 1) {
@@ -77,9 +80,14 @@ public class Statistika extends Activity {
         Log.d("TAG->BROJ_TASKOVA",String.valueOf(l_counter));
 
 
-        h_percent = (crveni_precrtani/h_counter)*100;
-        m_percent = (zuti_precrtani/m_counter)*100;
-        l_percent = (zeleni_precrtani/l_counter)*100;
+        //h_percent = (crveni_precrtani/h_counter)*100;
+        //m_percent = (zuti_precrtani/m_counter)*100;
+        //l_percent = (zeleni_precrtani/l_counter)*100;
+
+        h_percent = nativna_klasa.calculatePercent(crveni_precrtani,h_counter);
+        m_percent = nativna_klasa.calculatePercent(zuti_precrtani,m_counter);
+        l_percent = nativna_klasa.calculatePercent(zeleni_precrtani,l_counter);
+
 
         Log.d("Statistika","10");
 
