@@ -3,4 +3,4 @@
 3->testirati sve slucajeve(radi sve kako treba)
 4->popraviti da se checker ne vraca na odcekiran nakon sto se ode u statistiku(reseno)
 5->dodati back dugme u statistiku(dodato)
-6->datum(danas, sutra i ostalo), ne cuvati u bazi vec proveravati da ne bude da se doda za sutra i kad se sutra udje da opet pise za sutra
+6->datum(danas, sutra i ostalo), ne cuvati u bazi vec proveravati da ne bude da se doda za sutra i kad se sutra udje da opet pise za sutra(uradjeno)
